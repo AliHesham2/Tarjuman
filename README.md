@@ -55,9 +55,30 @@ system audio ─► VAD ─► Whisper (local, GPU) ─► translation (Groq →
 - **Safe secrets handling.** Keys come from `.env` or Windows Credential Manager, and logs are sanitised.
 - **Tested.** 241 unit and integration tests (run locally, Python 3.12, Windows).
 
-## Quick start
+## System requirements
 
-Requirements: Windows 10/11, Python 3.12, and an NVIDIA GPU is strongly recommended (without one Tarjuman falls back to the CPU and a smaller model).
+| | Minimum (CPU mode) | Recommended (GPU mode) |
+|---|---|---|
+| OS | Windows 10 version 2004 (build 19041) or newer | Windows 10/11 |
+| Python | 3.12 | 3.12 |
+| Processor | Modern multi-core x64 CPU | Same |
+| GPU | None | NVIDIA with CUDA 12 support, about 2 GB free VRAM for `medium` |
+| Speech model | `base.en` (automatic fallback) | `medium`, `int8_float16` |
+| RAM | 4 GB or more | 8 GB or more |
+| Disk | about 3 GB free for models and packages | about 3 GB free plus the CUDA packages in `requirements.txt` |
+| Internet | Required for translation (and for the first model download) | Same |
+| Keys | A free [DeepL](https://www.deepl.com/pro-api) key (Groq optional) | Same |
+| Audio | A playback device with WASAPI loopback (any normal Windows output) | Same |
+
+Not supported: macOS and Linux (see [Roadmap](ROADMAP.md)).
+
+**What was actually measured and what was not** (2026-11-22, Windows 11, 16 GB RAM, RTX 3060 Laptop 6 GB, 16 CPU threads):
+
+- Verified: `medium` on the GPU used about 1.3 GB of VRAM and about 2.0 GB of process RAM while transcribing; `base.en` on the CPU used about 0.5 GB of RAM and transcribed 14 s of audio in about 1.0 s (one-shot, not a live stream).
+- Verified in code: window hiding from screen capture needs Windows 10 build 19041 or newer.
+- **Not verified**: the RAM and disk minimums above are our estimates from these numbers, not tested limits. We have not tested weaker CPUs, other GPUs (AMD or Intel are not supported by the CUDA path), older NVIDIA drivers (tested with 591.74), Windows 10, or a live stream in CPU-only mode. If you try a weaker machine, please report the result in an issue.
+
+## Quick start
 
 ```powershell
 git clone https://github.com/AliHesham2/Tarjuman.git
