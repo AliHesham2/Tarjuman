@@ -1,0 +1,10 @@
+# Phase 8 audio-source dependencies.
+#
+# PyAudioWPatch provides Phase 1 device loopback; process-audio-capture supplies
+# the native process-loopback DLL. If the latter is absent, liveTranslate stays
+# on device loopback and disables per-app choices.
+PyAudioWPatch>=0.2.12
+pycaw==20240210
+comtypes==1.4.4
+psutil>=5.9
+process-audio-capture==1.0.0

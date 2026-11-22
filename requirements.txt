@@ -1,0 +1,38 @@
+# liveTranslate - exact versions this project was tested with (Windows, Python 3.12).
+#   pip install -r requirements.txt
+
+# Speech to text
+faster-whisper==1.1.1
+ctranslate2==4.4.0
+onnxruntime==1.31.1            # Silero VAD (assets/silero_vad.onnx)
+numpy==1.26.4
+
+# GPU for Whisper (optional but recommended: medium model runs in ~0.7 s per
+# 15 s of audio on an RTX 3060, versus 40-60 s on the CPU). CTranslate2 4.4
+# needs cuDNN 8 and cuBLAS 12; without them the app falls back to the CPU
+# with the small base.en model.
+nvidia-cudnn-cu12==8.9.7.29
+nvidia-cublas-cu12==12.9.2.10
+
+# Audio capture (Windows only)
+PyAudioWPatch==0.2.12.9
+pycaw==20240210                # list the apps that are playing sound
+comtypes==1.4.4
+psutil==7.2.2
+process-audio-capture==1.0.0   # per-application capture (optional)
+
+# UI
+PyQt6==6.7.1
+
+# Translation (cloud only: Groq + DeepL)
+openai==1.109.1                # Groq speaks the OpenAI protocol
+deepl==1.32.0
+httpx==0.28.1
+
+# Settings and secrets
+python-dotenv==1.0.1
+PyYAML==6.0.2
+keyring==25.4.1
+
+# Building the .exe (optional)
+pyinstaller==6.22.3

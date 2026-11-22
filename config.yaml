@@ -1,0 +1,249 @@
+﻿# config.yaml
+# ============================================================
+#  liveTranslate — User Configuration
+#  الـ API keys في .env — مش هنا أبداً
+#  الـ defaults دي optimized لـ RTX 3060 Laptop
+# ============================================================
+
+# ── STT Engine ──────────────────────────────────────────────
+engine:
+  # Whisper model size
+  # tiny   = ~75ms  latency, lowest accuracy  (~1GB VRAM)
+  # base   = ~150ms latency, ok accuracy      (~1GB VRAM)
+  # small  = ~250ms latency, good accuracy    (~1.2GB VRAM)
+  # medium = ~500ms latency, great accuracy   (~1.5GB VRAM)  ← موصى به
+  # large-v3 = ~1s  latency, best accuracy    (~3GB VRAM)
+  # MEASURED on this PC (15 s window): RTX 3060 medium int8_float16 = 0.7 s (best),
+  # CPU base.en = 0.8 s, CPU medium = 38-60 s (unusable). The GPU needs the pip
+  # packages nvidia-cudnn-cu12==8.9.7.29 + nvidia-cublas-cu12 (kept in
+  # vendor/cuda_wheels). Without them the app falls back to CPU + base.en.
+  whisper_model: "medium"
+
+  # cuda = RTX 3060 → float16 تلقائي (Tensor Cores)
+  # cpu  = fallback لو مفيش GPU
+  whisper_device: "cuda"
+
+  # float16  = أسرع، CC >= 7.0 (CC 8.6 موجود) ← موصى به
+  # int8     = أبطأ قليلاً، ذاكرة أقل، للـ CPU
+  # float32  = أبطأ، للـ compatibility فقط
+  whisper_compute_type: "int8_float16"
+
+  whisper_language: "en"          # مش بنحتاج language detection → أسرع
+
+  # Audio chunk: 250ms = 4000 samples بـ 16000Hz
+  chunk_duration_ms: 250
+
+  # Sliding window: امسح الـ buffer بعد 15 ثانية (منع VRAM overflow)
+  buffer_trimming_sec: 15
+
+  # Beam search: 1 = أسرع، 5 = أدق (CPU حيتعب مع 5)
+  beam_size: 1
+
+  # Whisper context: استخدم آخر confirmed segment كـ initial_prompt
+  condition_on_previous_text: true
+
+# ── VAD (Voice Activity Detection) ──────────────────────────
+vad:
+  # Silero VAD threshold: 0 = sensitive جداً، 1 = صارم جداً
+  # 0.5 = balanced (الـ default الرسمي)
+  threshold: 0.5
+
+  # Silence duration قبل flush (ms)
+  # 500ms = إذا في 0.5 ثانية سكوت → اعتبر الجملة خلصت
+  min_silence_ms: 500
+
+  # Silence padding حوالين الكلام (ms)
+  # 100ms قبل + 100ms بعد = ما نحتاجش تقطع الكلام
+  padding_ms: 100
+
+  # Ignore speech أقل من كده (ms) — مش كلام مفيد
+  min_speech_ms: 200
+
+  # Fallback فقط لو موديل Silero مش موجود (RMS energy VAD)
+  # -42 dBFS = الحد اللي تحته يعتبر سكوت
+  fallback_dbfs_threshold: -42.0
+  # فرق الـ hysteresis بين بداية الكلام ونهاشته (dB)
+  fallback_hysteresis_db: 6.0
+
+# ── Anti-Hallucination Filters ───────────────────────────────
+filters:
+  # no_speech_prob: لو Whisper واثق إنه مفيش كلام → throw away
+  no_speech_threshold: 0.45
+
+  # avg_logprob: لو ثقة Whisper في الـ segment أقل من كده → throw away
+  # (القيم الطبيعية -0.2 إلى -0.6، وأقل من -1.0 = كلام مش واضح)
+  min_avg_logprob: -1.0
+
+  # لو نفس الـ output جه 7 مرات متتالية → hallucination → throw away
+  same_output_threshold: 7
+
+  # 3-gram repetition check (Anti-loop filter)
+  anti_loop_ngram: 3
+
+# ── Translation ──────────────────────────────────────────────
+translation:
+  source_lang: "en"
+  target_lang: "ar"
+
+  # Partial translation: ترجم الـ hypothesis قبل الـ confirmation
+  # True  = أسرع، ممكن يتغير الـ text
+  # False = أبطأ، أدق
+  partial_translation: true
+
+  # Context window: امسك آخر N جملة كـ context لكل call
+  context_window_sentences: 5
+
+  # Providers بالترتيب (Priority 1 = الأول، يتحول للي بعده لو quota خلصت)
+  # Cloud-only: Groq (several accounts) then DeepL. No Gemini / local models (by design).
+  providers:
+    - name: "groq"
+      model: "qwen/qwen3.8-27b"   # PRIMARY (the .env GROQ_MODEL overrides it)
+      timeout_ms: 1500
+
+    - name: "deepl"
+      # TESTED: 847ms, 1,000,000 chars/month free tier
+      timeout_ms: 2000
+
+
+# ── Quota Limits (للـ Proactive Tracking) ────────────────────
+quotas:
+  # Groq limits for qwen/qwen3.8-27b, per ACCOUNT (Developer plan table on
+  # console.groq.com/docs/rate-limits: 30 req/min, 1,000 req/day, 8,000 tokens/min,
+  # 200,000 tokens/day). 1,000/day and 8,000/min are CONFIRMED by Groq's own
+  # response headers (x-ratelimit-limit-*, checked 2026-10-29) for these keys; the
+  # other two come from the same official table. Groq refills the daily allowance
+  # gradually (about 1 request per 86 s), not at midnight.
+  # groq_2 .. groq_10 (extra accounts, keys in .env as GROQ_API_KEY_2 .. _10)
+  # automatically inherit these numbers with their own counters. The app switches
+  # to the next account at translation.quota_headroom (95 %).
+  groq:
+    daily_limit: 1000
+    daily_token_limit: 200000
+    rpm_limit: 30
+    tpm_limit: 8000
+
+  deepl:
+    monthly_char_limit: 490000  # 490K من 500K chars/month
+
+
+# ── Overlay UI ───────────────────────────────────────────────
+overlay:
+  # Opacity: 0.0 = شفاف كامل، 1.0 = معتم كامل
+  opacity: 0.85
+
+  # Arabic font (bundled مع التطبيق)
+  font_family: "Noto Naskh Arabic"
+
+  # Font size بالـ pt
+  font_size: 20
+
+  # Position: bottom-center, bottom-left, bottom-right,
+  #            top-center,    top-left,    top-right,    custom
+  position: "bottom-center"
+
+  # لو position: custom
+  custom_x: 100
+  custom_y: 800
+
+  # Default window height in text lines (the window can be resized freely)
+  max_lines: 3
+
+  # Translated pieces flow into one paragraph that wraps at the window edge.
+  # A new paragraph starts after the speaker pauses this long (seconds).
+  paragraph_pause_s: 4.0
+
+  # Fade-in animation duration (ms)
+  fade_duration_ms: 200
+
+  # Stealth Mode: true = مش بتظهر في screen share
+  stealth_mode: true
+
+  # Clicks pass through to the meeting app. Hold Alt while clicking to drag
+  # the overlay. Set false if you prefer a normal interactive window.
+  click_through: true
+
+  # Text direction (RTL دايماً للعربي)
+  text_direction: "rtl"
+
+# ── Hotkeys ──────────────────────────────────────────────────
+hotkeys:
+  # Toggle الـ overlay (يظهر/يختفي)
+  toggle_overlay: "Ctrl+Shift+T"
+
+  # Toggle الـ listening (يبدأ/يوقف الكابتشر)
+  toggle_listening: "Ctrl+Shift+L"
+
+  # Clear الـ translation history
+  clear_history: "Ctrl+Shift+C"
+
+  # فتح الـ settings
+  open_settings: "Ctrl+Shift+S"
+
+# ── Privacy & Security ───────────────────────────────────────
+privacy:
+  # Log السطح بدون محتوى الترجمة (تحمي privacy الميتينج)
+  log_translation_content: false
+
+  # احتفظ بـ quota_state.json في (default: ~/.liveTranslate/)
+  state_dir: "~/.liveTranslate"
+
+# ── Audio ─────────────────────────────────────────────────────
+audio:
+  # Sample rate (Whisper يحتاج 16000)
+  sample_rate: 16000
+
+  # Channels (1 = mono)
+  channels: 1
+
+  # Bit depth
+  sample_width: 2                # 16-bit
+
+  # WASAPI exclusive mode: false = shared (موصى به)
+  exclusive_mode: false
+
+  # Auto-select loopback device (أول WASAPI loopback device يلاقيه)
+  auto_select_device: true
+
+  # Device index (-1 = auto)
+  device_index: -1
+
+  # Phase 8: audio source selection.
+  # device  = all system audio (Phase 1 behaviour, safe default)
+  # session = one application/process tree
+  # auto    = propose an active meeting app, otherwise use device
+  capture_mode: "device"
+
+  # Active apps considered by auto mode. Confirmation is still shown in the
+  # tray; this is not a background auto-switch list.
+  auto_detect_apps:
+    - "zoom.exe"
+    - "ms-teams.exe"
+    - "teams.exe"
+    - "webex.exe"
+    - "chrome.exe"
+    - "msedge.exe"
+    - "firefox.exe"
+    - "discord.exe"
+    - "Microsoft.Media.Player.exe"   # media players
+    - "vlc.exe"
+    - "wmplayer.exe"
+    - "mpc-hc64.exe"
+    - "PotPlayerMini64.exe"
+
+  # Executable name/path selected in the tray (empty = device/auto). A PID is
+  # deliberately not persisted because it changes when the app restarts.
+  selected_app: ""
+
+# ── Logging ──────────────────────────────────────────────────
+logging:
+  # debug, info, warning, error
+  level: "info"
+
+  # Log file (null = console only)
+  file: "~/.liveTranslate/logs/live_translate.log"
+
+  # Max log file size (MB) قبل rotation
+  max_size_mb: 10
+
+  # عدد log files محفوظة
+  backup_count: 3

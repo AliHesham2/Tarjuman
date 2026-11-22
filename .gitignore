@@ -1,0 +1,61 @@
+# Git ignore rules for Tarjuman
+
+# ── Secrets ──────────────────────────────────────
+.env
+*.key
+*.pem
+
+# ── Python ───────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+env/
+*.egg-info/
+dist/
+build/
+
+# ── Models (كبيرة جداً للـ Git) ──────────────────
+*.bin
+*.onnx
+# ...لكن موديل الـ VAD صغير (2.3MB) ولازم يكون مع الـ app
+!assets/silero_vad.onnx
+*.gguf
+*.pt
+*.pth
+~/.cache/whisper/
+models/
+
+# ── References (cloned repos) ────────────────────
+references/
+
+# ── Logs & temp ──────────────────────────────────
+*.log
+*.tmp
+temp/
+logs/
+
+# ── OS ───────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── IDE ──────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+
+
+# Offline CUDA wheels (1.2 GB) - never commit
+vendor/
+*.whl
+
+# Local build/run output
+build_log.txt
+run.txt
+
+# Private developer notes and local tooling (not for the public repo)
+plan.md
+details.md
+.mcp.json
