@@ -418,6 +418,68 @@ class TestVAC(unittest.TestCase):
         self.assertTrue(second_text, "second utterance was lost")
 
 
+class ScriptedVAD:
+    """VAD stand-in that returns a fixed list of events per ``process`` call."""
+
+    backend_name = "scripted"
+
+    def __init__(self, script):
+        self.script = list(script)
+        self.resets = 0
+
+    def process(self, samples):
+        return self.script.pop(0) if self.script else []
+
+    def reset(self):
+        self.resets += 1
+
+
+class RecordingBackend(GrowingBackend):
+    """GrowingBackend that remembers (window seconds, prompt) of each call."""
+
+    def __init__(self):
+        self.calls: list[tuple[float, str | None]] = []
+
+    def transcribe(self, audio, initial_prompt=None):
+        self.calls.append((len(audio) / SR, initial_prompt))
+        return super().transcribe(audio, initial_prompt)
+
+
+class TestVACBoundaries(unittest.TestCase):
+    """Regressions found by scripts/measure_real_latency.py (2026-11-22)."""
+
+    def test_end_and_start_in_one_chunk_keep_both_utterances(self):
+        """A VAD 'end' and the next 'start' can arrive in the same chunk.
+
+        The first utterance's unconfirmed words used to be thrown away by the
+        'start' handler, and the audio after the 'end' was cleared so the
+        second utterance lost its first syllables.
+        """
+        config = make_config()
+        backend = RecordingBackend()
+        vad = ScriptedVAD([
+            [{"type": "start", "timestamp": 0}],
+            [],
+            [
+                {"type": "end", "timestamp": int(3.0 * SR)},
+                {"type": "start", "timestamp": int(3.4 * SR)},
+            ],
+        ])
+        vac = VACOnlineASRProcessor(backend, config, vad=vad)
+
+        vac.insert_audio_chunk(tone(2.0))
+        vac.process_iter()
+        vac.insert_audio_chunk(tone(1.0))
+        vac.process_iter()
+        vac.insert_audio_chunk(tone(1.0))
+        confirmed, _partial = vac.process_iter()
+
+        # Last word of the first utterance (3.0 s -> w0..w5) must survive.
+        self.assertIn("w5", confirmed)
+        # The second utterance got the 0.6 s of audio after its start.
+        self.assertAlmostEqual(backend.calls[-1][0], 0.6, places=2)
+
+
 class TestSttWorkerIntegration(unittest.TestCase):
     def test_worker_flushes_text_to_translation_queue(self):
         """The real coordinator loop (minus Qt/audio hardware) end-to-end."""

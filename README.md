@@ -115,12 +115,12 @@ First real measurements (2026-11-22, RTX 3060 laptop, Whisper `medium`, one 11 s
 
 | Measurement | Result |
 |---|---|
-| Transcribe 14 s of audio in one go | 0.49 s |
-| Word spoken → word confirmed | median 0.65 s, p95 3.0 s |
-| Translation round trip (DeepL) | median 0.17 s |
-| **End to end: spoken → translated** | **median 0.87 s, p95 3.35 s** |
+| Transcribe 14 s of audio in one go | about 0.5 to 0.6 s |
+| Word spoken → word confirmed | median 0.68 s, p95 1.1 s |
+| Translation round trip (DeepL) | median 0.18 s |
+| **End to end: spoken → translated** | **median 0.93 s, p95 1.4 s** |
 
-This is **one machine and one short clip**, so treat it as a first data point. The same test also found a real problem: in streaming mode part of the sentence was lost ("ask not what your country can do for you" came out as "ASS Not!"). Fixing that is the top priority on the [Roadmap](ROADMAP.md). We have not yet tested a real meeting, other hardware, or translation quality.
+This is **one machine and one short clip**, so treat it as a first data point. The same test found a bug where streaming mode lost part of a sentence; it is fixed (the difference from a one-shot transcription went from 36% to 4.5% of words). One known weakness remains: a single word after a long pause can be misheard (here "ask" became "ASS"). We have not yet tested a real meeting, other hardware, or translation quality. See the [Roadmap](ROADMAP.md).
 
 ## Configuration
 

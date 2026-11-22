@@ -348,6 +348,9 @@ class VACOnlineASRProcessor:
         self._pending_online_samples = 0
         self._status = "nonvoice"
         self._is_final = False
+        # Text of an utterance that was closed inside a chunk that also
+        # contained the next utterance's start; delivered by process_iter().
+        self._carry_text: list[str] = []
 
     # -- info ----------------------------------------------------------------
 
@@ -399,13 +402,32 @@ class VACOnlineASRProcessor:
 
         if self._pending_online_samples >= self.online_chunk_samples:
             self._pending_online_samples = 0
-            return self.online.process_iter()
+            confirmed, partial = self.online.process_iter()
+            return self._with_carry(confirmed), partial
 
-        return "", ""
+        return self._with_carry(""), ""
+
+    def _with_carry(self, confirmed: str) -> str:
+        """Prepend text of utterances closed earlier in the same chunk."""
+        if not self._carry_text:
+            return confirmed
+        parts = self._carry_text + ([confirmed] if confirmed else [])
+        self._carry_text = []
+        return " ".join(parts).strip()
+
+    def _finalize_pending(self) -> None:
+        """Close an utterance whose VAD 'end' has not been flushed yet."""
+        if not self._is_final:
+            return
+        text = self.online.finish()
+        if text:
+            self._carry_text.append(text)
+        self._pending_online_samples = 0
+        self._is_final = False
 
     def finish_text(self) -> str:
         """Flush the open utterance (end of stream / pipeline stop)."""
-        text = self.online.finish()
+        text = self._with_carry(self.online.finish())
         self._pending_online_samples = 0
         self._is_final = False
         self._status = "nonvoice"
@@ -432,6 +454,10 @@ class VACOnlineASRProcessor:
         timestamp = int(event.get("timestamp", 0))
 
         if kind == "start":
+            # The previous utterance may still be waiting to be flushed
+            # (its 'end' arrived in this same chunk): finish it first, or its
+            # unconfirmed words would be discarded by init().
+            self._finalize_pending()
             frame = max(0, timestamp - self._buffer_offset)
             self.online.init(offset=timestamp / float(SAMPLE_RATE))
             self._pending_online_samples = 0
@@ -444,12 +470,17 @@ class VACOnlineASRProcessor:
             frame = timestamp - self._buffer_offset
             frame = min(max(0, frame), self._audio.size)
             self._feed_online(self._audio[:frame])
-            self._clear_audio()
+            # Keep what came after the end: it may already hold the start of
+            # the next utterance (same chunk). finish_text() clears it when
+            # no new utterance follows.
+            self._buffer_offset += frame
+            self._audio = self._audio[frame:].copy()
             self._status = "nonvoice"
             self._is_final = True
 
         elif kind == "cancel":
             # Utterance shorter than min_speech_ms — never send it to ASR.
+            self._finalize_pending()
             self._clear_audio()
             self.online.discard(offset=timestamp / float(SAMPLE_RATE))
             self._status = "nonvoice"

@@ -15,8 +15,8 @@ Honest status of what exists and what is still missing on the way to fast, relia
 ## Not done yet, in priority order
 
 ### 0. Problems found by the first real measurement ([details](docs/PERFORMANCE.md))
-- [ ] Streaming mode drops or garbles words (36% of words differ from a one-shot transcription of the same clip, reproducible). Find the cause (VAD segmentation, buffer trimming, or the confirmation policy) and fix it
-- [ ] Cut the 3 s tail delay at the end of sentences
+- [x] Streaming mode dropped words when the VAD reported an utterance end and the next start in one chunk (36% → 4.5% of words differ from a one-shot transcription on the test clip; regression test added)
+- [ ] Short isolated words after a pause are misheard ("ask" → "ASS"). Evaluate on more audio: overlap with the previous utterance's audio, a longer `vad.min_silence_ms`, or merging short utterances. A context prompt was tried and did not help
 - [ ] Translation providers: Groq accounts were restricted during the test; confirm Groq's terms, add more providers, and make failed providers cost no time on the first sentences
 
 ### 1. Prove the speed (the core promise)
