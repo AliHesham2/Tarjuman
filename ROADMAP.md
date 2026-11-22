@@ -14,8 +14,14 @@ Honest status of what exists and what is still missing on the way to fast, relia
 
 ## Not done yet, in priority order
 
+### 0. Problems found by the first real measurement ([details](docs/PERFORMANCE.md))
+- [ ] Streaming mode drops or garbles words (36% of words differ from a one-shot transcription of the same clip, reproducible). Find the cause (VAD segmentation, buffer trimming, or the confirmation policy) and fix it
+- [ ] Cut the 3 s tail delay at the end of sentences
+- [ ] Translation providers: Groq accounts were restricted during the test; confirm Groq's terms, add more providers, and make failed providers cost no time on the first sentences
+
 ### 1. Prove the speed (the core promise)
-- [ ] Measure real end-to-end latency (speech → text on screen) with real models and network, and publish the method and numbers
+- [x] First real end-to-end measurement (one machine, one clip) published in `docs/PERFORMANCE.md`
+- [ ] Repeat the measurement with more clips, speakers, noise and a real call
 - [ ] Test in a real Zoom / Meet / Teams call and a real 2-hour meeting (not yet done)
 - [ ] Reproduce the Whisper timings on other GPUs and on CPU
 - [ ] Accuracy evaluation (WER for English, translation quality for Arabic) on a public test set

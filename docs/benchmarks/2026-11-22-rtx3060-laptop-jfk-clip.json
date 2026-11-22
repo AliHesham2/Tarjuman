@@ -1,0 +1,301 @@
+{
+  "summary": {
+    "hardware": {
+      "os": "Windows-11-10.0.26300-SP0",
+      "python": "3.12.10",
+      "gpu": "NVIDIA GeForce RTX 3060 Laptop GPU, 591.74",
+      "cpu_threads": 16
+    },
+    "model": "medium",
+    "device": "cuda/int8_float16",
+    "audio_seconds": 14.0,
+    "runs": 3,
+    "model_load_s": 7.13,
+    "batch_transcribe_s": {
+      "n": 5,
+      "mean": 0.49,
+      "p50": 0.491,
+      "p95": 0.501,
+      "max": 0.501
+    },
+    "batch_real_time_factor": 0.035,
+    "streaming_whisper_pass_s": {
+      "n": 63,
+      "mean": 0.278,
+      "p50": 0.272,
+      "p95": 0.351,
+      "max": 0.499
+    },
+    "stt_lag_s": {
+      "n": 21,
+      "mean": 0.968,
+      "p50": 0.647,
+      "p95": 3.006,
+      "max": 3.025
+    },
+    "translation_s": {
+      "n": 21,
+      "mean": 0.629,
+      "p50": 0.18,
+      "p95": 3.199,
+      "max": 3.722
+    },
+    "e2e_lag_s": {
+      "n": 21,
+      "mean": 1.966,
+      "p50": 1.169,
+      "p95": 4.296,
+      "max": 4.431
+    },
+    "reference_transcript": "And so, my fellow Americans, ask not what your country can do for you. Ask what you can do for your country.",
+    "streaming_transcripts": [
+      "And so my fellow Americans. ASS Not! Ask what you can do for your country.",
+      "And so my fellow Americans. ASS Not! Ask what you can do for your country.",
+      "And so my fellow Americans. ASS Not! Ask what you can do for your country."
+    ],
+    "streaming_word_error_vs_batch": [
+      0.364,
+      0.364,
+      0.364
+    ],
+    "confirmations": 21,
+    "translation_failures": 0,
+    "providers_used": [
+      "deepl"
+    ],
+    "skipped_providers": []
+  },
+  "events": [
+    {
+      "text": "And so",
+      "last_word_end_s": 2.02,
+      "confirmed_at_s": 2.51,
+      "stt_lag_s": 0.49,
+      "translation_s": 3.722,
+      "provider": "deepl",
+      "translated_ok": true,
+      "e2e_lag_s": 4.212,
+      "run": 1
+    },
+    {
+      "text": "my",
+      "last_word_end_s": 2.38,
+      "confirmed_at_s": 3.027,
+      "stt_lag_s": 0.647,
+      "translation_s": 3.199,
+      "provider": "deepl",
+      "translated_ok": true,
+      "e2e_lag_s": 3.846,
+      "run": 1
+    },
+    {
+      "text": "fellow",
+      "last_word_end_s": 2.7,
+      "confirmed_at_s": 3.557,
+      "stt_lag_s": 0.857,
+      "translation_s": 0.905,
+      "provider": "deepl",
+      "translated_ok": true,
+      "e2e_lag_s": 4.431,
+      "run": 1
+    },
+    {
+      "text": "Americans.",
+      "last_word_end_s": 3.34,
+      "confirmed_at_s": 4.341,
+      "stt_lag_s": 1.001,
+      "translation_s": 1.403,
+      "provider": "deepl",
+      "translated_ok": true,
+      "e2e_lag_s": 4.296,
+      "run": 1
+    },
+    {
+      "text": "ASS",
+      "last_word_end_s": 4.92,
+      "confirmed_at_s": 5.241,
+      "stt_lag_s": 0.321,
+      "translation_s": 0.171,
+      "provider": "deepl",
+      "translated_ok": true,
+      "e2e_lag_s": 2.382,
+      "run": 1
+    },
+    {
+      "text": "Not!",
+      "last_word_end_s": 5.52,
+      "confirmed_at_s": 6.016,
+      "stt_lag_s": 0.496,
+      "translation_s": 0.165,
+      "provider": "deepl",
+      "translated_ok": true,
+      "e2e_lag_s": 1.947,
+      "run": 1
+    },
+    {
+      "text": "Ask what you can do for your country.",
+      "last_word_end_s": 9.6,
+      "confirmed_at_s": 12.625,
+      "stt_lag_s": 3.025,
+      "translation_s": 0.211,
+      "provider": "deepl",
+      "translated_ok": true,
+      "e2e_lag_s": 3.236,
+      "run": 1
+    },
+    {
+      "text": "And so",
+      "last_word_end_s": 2.02,
+      "confirmed_at_s": 2.515,
+      "stt_lag_s": 0.495,
+      "translation_s": 0.161,
+      "provider": "deepl",
+      "translated_ok": true,
+      "e2e_lag_s": 0.657,
+      "run": 2
+    },
+    {
+      "text": "my",
+      "last_word_end_s": 2.38,
+      "confirmed_at_s": 3.033,
+      "stt_lag_s": 0.653,
+      "translation_s": 0.283,
+      "provider": "deepl",
+      "translated_ok": true,
+      "e2e_lag_s": 0.936,
+      "run": 2
+    },
+    {
+      "text": "fellow",
+      "last_word_end_s": 2.7,
+      "confirmed_at_s": 3.528,
+      "stt_lag_s": 0.828,
+      "translation_s": 0.155,
+      "provider": "deepl",
+      "translated_ok": true,
+      "e2e_lag_s": 0.983,
+      "run": 2
+    },
+    {
+      "text": "Americans.",
+      "last_word_end_s": 3.34,
+      "confirmed_at_s": 4.333,
+      "stt_lag_s": 0.993,
+      "translation_s": 0.175,
+      "provider": "deepl",
+      "translated_ok": true,
+      "e2e_lag_s": 1.169,
+      "run": 2
+    },
+    {
+      "text": "ASS",
+      "last_word_end_s": 4.92,
+      "confirmed_at_s": 5.242,
+      "stt_lag_s": 0.322,
+      "translation_s": 0.18,
+      "provider": "deepl",
+      "translated_ok": true,
+      "e2e_lag_s": 0.502,
+      "run": 2
+    },
+    {
+      "text": "Not!",
+      "last_word_end_s": 5.52,
+      "confirmed_at_s": 6.013,
+      "stt_lag_s": 0.493,
+      "translation_s": 0.159,
+      "provider": "deepl",
+      "translated_ok": true,
+      "e2e_lag_s": 0.652,
+      "run": 2
+    },
+    {
+      "text": "Ask what you can do for your country.",
+      "last_word_end_s": 9.6,
+      "confirmed_at_s": 12.557,
+      "stt_lag_s": 2.957,
+      "translation_s": 0.839,
+      "provider": "deepl",
+      "translated_ok": true,
+      "e2e_lag_s": 3.796,
+      "run": 2
+    },
+    {
+      "text": "And so",
+      "last_word_end_s": 2.02,
+      "confirmed_at_s": 2.516,
+      "stt_lag_s": 0.496,
+      "translation_s": 0.28,
+      "provider": "deepl",
+      "translated_ok": true,
+      "e2e_lag_s": 0.777,
+      "run": 3
+    },
+    {
+      "text": "my",
+      "last_word_end_s": 2.38,
+      "confirmed_at_s": 3.024,
+      "stt_lag_s": 0.644,
+      "translation_s": 0.161,
+      "provider": "deepl",
+      "translated_ok": true,
+      "e2e_lag_s": 0.805,
+      "run": 3
+    },
+    {
+      "text": "fellow",
+      "last_word_end_s": 2.7,
+      "confirmed_at_s": 3.535,
+      "stt_lag_s": 0.835,
+      "translation_s": 0.169,
+      "provider": "deepl",
+      "translated_ok": true,
+      "e2e_lag_s": 1.004,
+      "run": 3
+    },
+    {
+      "text": "Americans.",
+      "last_word_end_s": 3.34,
+      "confirmed_at_s": 4.324,
+      "stt_lag_s": 0.984,
+      "translation_s": 0.201,
+      "provider": "deepl",
+      "translated_ok": true,
+      "e2e_lag_s": 1.185,
+      "run": 3
+    },
+    {
+      "text": "ASS",
+      "last_word_end_s": 4.92,
+      "confirmed_at_s": 5.244,
+      "stt_lag_s": 0.324,
+      "translation_s": 0.16,
+      "provider": "deepl",
+      "translated_ok": true,
+      "e2e_lag_s": 0.484,
+      "run": 3
+    },
+    {
+      "text": "Not!",
+      "last_word_end_s": 5.52,
+      "confirmed_at_s": 5.986,
+      "stt_lag_s": 0.466,
+      "translation_s": 0.167,
+      "provider": "deepl",
+      "translated_ok": true,
+      "e2e_lag_s": 0.633,
+      "run": 3
+    },
+    {
+      "text": "Ask what you can do for your country.",
+      "last_word_end_s": 9.6,
+      "confirmed_at_s": 12.606,
+      "stt_lag_s": 3.006,
+      "translation_s": 0.346,
+      "provider": "deepl",
+      "translated_ok": true,
+      "e2e_lag_s": 3.352,
+      "run": 3
+    }
+  ]
+}

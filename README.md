@@ -6,6 +6,7 @@
 
 Tarjuman (ترجمان, "interpreter") listens to the audio your computer is playing, transcribes it locally with Whisper, translates it in near real time, and shows the result in a small always-on-top overlay. It is not tied to Zoom, Meet or Teams: if you can hear it, Tarjuman can caption it.
 
+[![CI](https://github.com/AliHesham2/Tarjuman/actions/workflows/ci.yml/badge.svg)](https://github.com/AliHesham2/Tarjuman/actions/workflows/ci.yml)
 [![License: GPL v3](https://img.shields.io/badge/license-GPL--3.0-blue.svg)](LICENSE)
 ![Python](https://img.shields.io/badge/python-3.12-3776AB.svg)
 ![Platform](https://img.shields.io/badge/platform-Windows%2010%2F11-0078D4.svg)
@@ -40,14 +41,14 @@ system audio ─► VAD ─► Whisper (local, GPU) ─► translation (Groq →
 | Capture | Records all system audio, or a single application (per-app loopback) | `src/audio/` |
 | VAD | Silero VAD cuts silence so Whisper only sees speech | `src/audio/vad.py` |
 | Speech to text | `faster-whisper` on your GPU, with a hypothesis buffer that only commits words the model agrees on twice (less flicker) | `src/stt/` |
-| Translation | A quota-aware router tries Groq accounts in order, then DeepL, with circuit breakers and backoff | `src/translation/` |
+| Translation | A quota-aware router tries Groq, then DeepL, with circuit breakers and backoff | `src/translation/` |
 | Overlay | Frameless, click-through, always-on-top window with proper right-to-left Arabic and a bundled Arabic font | `src/ui/` |
 
 ## Features
 
 - **Works with any audio source**, not one meeting app.
 - **Speech recognition runs on your machine.** Audio is never uploaded; only the transcribed text is sent to the translation provider.
-- **Quota-aware translation routing.** Add several free Groq accounts; Tarjuman moves to the next key at 95% of a limit, before errors happen, then falls back to DeepL.
+- **Quota-aware translation routing.** Tarjuman tracks provider limits, moves to the next provider before a limit is hit, and uses circuit breakers when a provider fails (Groq, then DeepL).
 - **Per-application capture**, so you can caption one app and ignore the rest.
 - **Private by default.** The overlay is excluded from screen capture on Windows (`SetWindowDisplayAffinity`), so your captions do not appear in your own screen share. You can turn this off.
 - **Click-through overlay** that never steals focus. Hold Alt to grab it.
@@ -83,21 +84,23 @@ You can also type keys in **Settings → API Keys** instead of editing `.env`. T
 
 | Provider | Link | Free allowance |
 |---|---|---|
-| Groq | <https://console.groq.com/keys> | Per account and per model; see `config.yaml` → `quotas.groq` |
+| Groq | <https://console.groq.com/keys> | Per organization; see `config.yaml` → `quotas.groq`. Use one account and read Groq's terms; do not create extra accounts to get around limits |
 | DeepL | <https://www.deepl.com/pro-api> | 500,000 characters / month |
 
 Limits change. The values in `config.yaml` were checked against Groq's response headers when written; re-check them before relying on them.
 
 ## Performance
 
-These numbers were measured by the author on one machine and have **not** yet been reproduced elsewhere or measured in a real live meeting.
+First real measurements (2026-11-22, RTX 3060 laptop, Whisper `medium`, one 11 s English clip, DeepL translation). Full method, raw data and limits: **[docs/PERFORMANCE.md](docs/PERFORMANCE.md)**.
 
-| Setup | Result |
+| Measurement | Result |
 |---|---|
-| Whisper `medium`, `int8_float16`, RTX 3060 laptop GPU | about 0.7 s to transcribe 15 s of audio |
-| Same model on CPU | 40 to 60 s for 15 s of audio (use the `base.en` fallback) |
+| Transcribe 14 s of audio in one go | 0.49 s |
+| Word spoken → word confirmed | median 0.65 s, p95 3.0 s |
+| Translation round trip (DeepL) | median 0.17 s |
+| **End to end: spoken → translated** | **median 0.87 s, p95 3.35 s** |
 
-End-to-end latency (speech → Arabic on screen) with real models and a real network is **not yet measured**. It is the first item on the [Roadmap](ROADMAP.md), and we will publish the method and the numbers when we have them.
+This is **one machine and one short clip**, so treat it as a first data point. The same test also found a real problem: in streaming mode part of the sentence was lost ("ask not what your country can do for you" came out as "ASS Not!"). Fixing that is the top priority on the [Roadmap](ROADMAP.md). We have not yet tested a real meeting, other hardware, or translation quality.
 
 ## Configuration
 
