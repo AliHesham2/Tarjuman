@@ -25,4 +25,12 @@ jobs:
             Set-Content requirements-ci.txt
           python -m pip install -r requirements-ci.txt
       - name: Run tests
-        run: python -m unittest discover -s tests -v
+        shell: pwsh
+        run: |
+          python -m unittest discover -s tests -v 2>&1 | Tee-Object -FilePath test-output.txt
+          $code = $LASTEXITCODE
+          if ($code -ne 0) {
+            $tail = (Get-Content test-output.txt | Select-String -Pattern 'ERROR|FAIL|Traceback|Error' | Select-Object -First 15 | ForEach-Object { $_.Line }) -join ' || '
+            Write-Output "::error title=Test failures::$tail"
+          }
+          exit $code
