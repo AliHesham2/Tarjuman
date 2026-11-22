@@ -30,7 +30,7 @@ deepl==1.32.0
 httpx==0.28.1
 
 # Settings and secrets
-python-dotenv==1.0.1
+python-dotenv==1.2.4
 PyYAML==6.0.2
 keyring==25.4.1
 
