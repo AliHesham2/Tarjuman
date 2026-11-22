@@ -67,11 +67,23 @@ What it shows:
 
 **Latency cost of 800 ms**, measured in real time on 2 of these clips (3 runs each, speech recognition only): the median lag was unchanged (0.76 s vs 0.73 s on a continuous clip; 0.83 s vs 0.72 s on a clip with pauses). The p95 on the clip with pauses rose from 1.1 s to 1.6 s. Confirmation of the last words does not wait for the silence timer, because a word is confirmed as soon as two passes agree.
 
-Caveats: the voices are synthetic, clean and regular; real speakers pause less evenly and there is noise and overlap. Two voices, one language, 40 clips. No real meeting. **The default has not been changed yet**: this is evidence for changing it, not proof.
+Caveats: the voices are synthetic, clean and regular; real speakers pause less evenly and there is noise and overlap. Two voices, one language, 40 clips. No real meeting. **The default has not been changed**: the synthetic corpus favours 800 ms, a real-speech clip disfavours it (next section).
+
+### Counter-evidence: the real-speech clip got worse at 800 ms
+
+The same 800 ms setting on the original real-speech clip (JFK, 3 runs, DeepL; [raw data](benchmarks/2026-11-22-rtx3060-laptop-jfk-clip-min-silence-800.json)) was **worse** than 500 ms:
+
+| Real clip, runs 2 and 3 | 500 ms | 800 ms |
+|---|---|---|
+| STT lag, median / p95 | 0.68 s / 1.1 s | **1.12 s / 1.33 s** |
+| End to end, median / p95 | 0.93 s / 1.4 s | **1.30 s / 1.5 s** |
+| Words different from the one-shot transcription | 4.5% | **9.1%** |
+
+At 800 ms the sentence became *"And so my fellow Americans. Not! Watch your country can do for you. ask what you can do for your country."* ("ask" was lost). The clip has only 22 words and every run was identical, so this is one data point, but it is real human speech, and it disagrees with the synthetic corpus. **Because the two disagree, the default was kept at 500 ms.** Deciding needs several real recordings.
 
 ## Known problems
 
-1. **Isolated short words after a pause can be misheard** (see the stress test above; in the first clip "ask" came out as "ASS"). Passing earlier confirmed text to Whisper as a prompt was tried and did **not** help ("Not" became "Knock"), so it was not kept. The likely fix is a longer `vad.min_silence_ms` (800), pending the decision above.
+1. **Isolated short words after a pause can be misheard** (see the stress test above; in the first clip "ask" came out as "ASS"). Passing earlier confirmed text to Whisper as a prompt was tried and did **not** help ("Not" became "Knock"), so it was not kept. A longer `vad.min_silence_ms` (800) helps on synthetic speech but hurt on the one real clip, so it is undecided.
 2. **Groq keys were restricted.** Every configured Groq account returned `Error code: 400 - Organization has been restricted`. Groq community staff say this message usually means a possible terms violation or a flagged key, and that support can unlock it. A third-party summary of Groq's Acceptable Use Policy says registering multiple accounts to get around rate limits is not allowed; we could not confirm the exact wording in Groq's own document, so check it yourself. Until we know, the README no longer recommends using several free accounts.
 3. **Failed providers cost time.** Before the circuit breaker opens, each failed provider adds latency to the first sentences.
 
