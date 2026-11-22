@@ -576,6 +576,10 @@ class TestBackendLoad(unittest.TestCase):
              mock.patch(
                  "src.stt.faster_whisper._resolve_runtime",
                  return_value=("cuda", "float16"),
+             ), \
+             mock.patch(
+                 "src.stt.cuda_paths.cuda_runtime_ready",
+                 return_value=True,
              ):
             backend.load()
         return backend, created
