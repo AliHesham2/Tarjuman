@@ -30,7 +30,10 @@ jobs:
           python -m unittest discover -s tests -v 2>&1 | Tee-Object -FilePath test-output.txt
           $code = $LASTEXITCODE
           if ($code -ne 0) {
-            $tail = (Get-Content test-output.txt | Select-String -Pattern 'ERROR|FAIL|Traceback|Error' | Select-Object -First 15 | ForEach-Object { $_.Line }) -join ' || '
+            $all = Get-Content test-output.txt
+            $fails = $all | Select-String -Pattern '^(ERROR|FAIL): |^FAILED|^Ran |AssertionError|^[A-Za-z.]*Error: ' | Select-Object -First 12 | ForEach-Object { $_.Line }
+            $end = $all | Select-Object -Last 6
+            $tail = "EXIT=$code | " + (($fails + '--- last lines ---' + $end) -join ' || ')
             Write-Output "::error title=Test failures::$tail"
           }
           exit $code
