@@ -6,7 +6,6 @@
 
 Tarjuman (ترجمان, "interpreter") listens to the audio your computer is playing, transcribes it locally with Whisper, translates it in near real time, and shows the result in a small always-on-top overlay. It is not tied to Zoom, Meet or Teams: if you can hear it, Tarjuman can caption it.
 
-[![CI](https://github.com/AliHesham2/Tarjuman/actions/workflows/ci.yml/badge.svg)](https://github.com/AliHesham2/Tarjuman/actions/workflows/ci.yml)
 [![License: GPL v3](https://img.shields.io/badge/license-GPL--3.0-blue.svg)](LICENSE)
 ![Python](https://img.shields.io/badge/python-3.12-3776AB.svg)
 ![Platform](https://img.shields.io/badge/platform-Windows%2010%2F11-0078D4.svg)

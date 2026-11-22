@@ -47,12 +47,10 @@ Order: English → Arabic (done), then Arabic → English, then more languages. 
 - [ ] Optional on-device speech-to-text for lower-end machines
 
 ### 5. Project quality
-- [ ] Continuous integration (run the test suite on every pull request)
 - [ ] Rename internal identifiers (`liveTranslate`, `~/.liveTranslate`) to Tarjuman, **with a settings and key migration** so existing users lose nothing
 - [ ] Migrate PyQt6 → PySide6, then consider relicensing to a permissive license
 - [ ] Demo GIF and screenshots in the README
 - [ ] Localised README files and UI strings
-- [ ] Type checking and linting in CI
 
 ### 6. Ideas, not committed
 - Speaker labels, transcript export, custom vocabulary per meeting, a "second screen" view for phones
