@@ -46,11 +46,32 @@ The first measurement (same day) found that streaming mode lost words. The cause
 
 **Cause (fixed):** the voice detector can report the end of one utterance and the start of the next inside the same audio chunk. The code then threw away the unconfirmed words of the first utterance and the first audio of the second. The fix finishes the first utterance before starting the second and keeps the audio after the "end" marker. A regression test covers it (`tests/test_stt.py::TestVACBoundaries`).
 
+## Pause handling: synthetic stress test
+
+The first clip suggested a weakness: a word after a pause was misheard. To test it properly we generated a **synthetic** corpus with the Windows built-in voices (`scripts/make_tts_corpus.py`): 8 sentences x 5 pause patterns = 40 clips with known text, about 470 words per setting. Scored with `scripts/eval_streaming_accuracy.py` against the **true** text. Raw data: [`benchmarks/2026-11-22-synthetic-pause-eval.json`](benchmarks/2026-11-22-synthetic-pause-eval.json).
+
+Word error rate (lower is better), streaming mode, by `vad.min_silence_ms`:
+
+| min_silence_ms | continuous | first word alone (500 ms pause) | mid pauses (800 ms) | word by word (500 ms) | last word alone (1200 ms) | **all** |
+|---|---|---|---|---|---|---|
+| 500 (current default) | 2.1% | 4.3% | 3.2% | **13.8%** | 3.2% | **5.3%** |
+| 800 | 2.1% | 4.3% | 3.2% | 3.2% | 1.1% | **2.8%** |
+| 1000 | 2.1% | 4.3% | 3.2% | 3.2% | 3.2% | **3.2%** |
+| one-shot transcription (reference) | | | | | | 3.0% |
+
+What it shows:
+
+- With the default 500 ms, a pause of 500 ms or more splits the speech into separate utterances and Whisper transcribes tiny fragments with no context. Worst case ("word by word") had 13.8% errors, including a hallucinated sentence ("...please visit the link in the description").
+- At 800 or 1000 ms those pauses no longer split and the error rate matches the one-shot transcription. 800 and 1000 are not distinguishable here (a difference of about 2 words out of 470).
+- About 2% of the error floor in every column is number formatting ("ten percent" vs "10%"), not misrecognition.
+
+**Latency cost of 800 ms**, measured in real time on 2 of these clips (3 runs each, speech recognition only): the median lag was unchanged (0.76 s vs 0.73 s on a continuous clip; 0.83 s vs 0.72 s on a clip with pauses). The p95 on the clip with pauses rose from 1.1 s to 1.6 s. Confirmation of the last words does not wait for the silence timer, because a word is confirmed as soon as two passes agree.
+
+Caveats: the voices are synthetic, clean and regular; real speakers pause less evenly and there is noise and overlap. Two voices, one language, 40 clips. No real meeting. **The default has not been changed yet**: this is evidence for changing it, not proof.
+
 ## Known problems
 
-1. **Isolated short words are misheard.** In this clip the speaker pauses between "ask" and "not". The voice detector treats each as its own utterance, and Whisper transcribes the 0.5 s fragment with no context: "ask" came out as "ASS". Things we tried on this one clip, none shipped:
-   - Passing earlier confirmed text to Whisper as a prompt did **not** help ("Not" became "Knock", "ask" stayed "ASS"), so it was not kept.
-   - Raising `vad.min_silence_ms` to 1000 gave "ASK NOT!" correctly but delays the end of every utterance, and it also showed other differences ("Watch your country" for "what your country"). 800 did not fix it. A change to the default needs more audio than one clip.
+1. **Isolated short words after a pause can be misheard** (see the stress test above; in the first clip "ask" came out as "ASS"). Passing earlier confirmed text to Whisper as a prompt was tried and did **not** help ("Not" became "Knock"), so it was not kept. The likely fix is a longer `vad.min_silence_ms` (800), pending the decision above.
 2. **Groq keys were restricted.** Every configured Groq account returned `Error code: 400 - Organization has been restricted`. Groq community staff say this message usually means a possible terms violation or a flagged key, and that support can unlock it. A third-party summary of Groq's Acceptable Use Policy says registering multiple accounts to get around rate limits is not allowed; we could not confirm the exact wording in Groq's own document, so check it yourself. Until we know, the README no longer recommends using several free accounts.
 3. **Failed providers cost time.** Before the circuit breaker opens, each failed provider adds latency to the first sentences.
 

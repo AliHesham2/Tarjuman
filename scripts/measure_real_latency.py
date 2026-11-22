@@ -205,6 +205,7 @@ def main() -> int:
     parser.add_argument("--audio", required=True, help="audio file (wav/flac/mp3...)")
     parser.add_argument("--runs", type=int, default=3)
     parser.add_argument("--no-translate", action="store_true")
+    parser.add_argument("--min-silence", type=int, help="override vad.min_silence_ms")
     parser.add_argument("--json", help="write full results to this file")
     args = parser.parse_args()
 
@@ -215,6 +216,8 @@ def main() -> int:
     load_dotenv(ROOT / ".env")
     # Ignore per-user overrides so results are reproducible from config.yaml.
     config = load_config(ROOT / "config.yaml", user_path=ROOT / "config.yaml")
+    if args.min_silence:
+        config.vad.min_silence_ms = args.min_silence
 
     audio = load_audio_16k(args.audio)
     # 1 s of silence before and 2 s after, like a real stream.
@@ -265,6 +268,7 @@ def main() -> int:
     report = {
         "hardware": hardware(),
         "model": config.engine.whisper_model,
+        "vad_min_silence_ms": config.vad.min_silence_ms,
         "device": f"{backend.device}/{backend.compute_type}",
         "audio_seconds": round(duration, 2),
         "runs": args.runs,

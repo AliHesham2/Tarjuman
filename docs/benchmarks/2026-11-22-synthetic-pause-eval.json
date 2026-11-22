@@ -1,0 +1,817 @@
+{
+  "clips": [
+    {
+      "id": "s00_continuous",
+      "variant": "continuous",
+      "truth": "Good morning everyone, let's begin the meeting with the quarterly results.",
+      "one_shot": "Good  morning  everyone,  let's  begin  the  meeting  with  the  quarterly  results.",
+      "streaming": {
+        "500": {
+          "text": "Good morning everyone. let's begin the meeting with the quarterly results.",
+          "errors": 0
+        },
+        "800": {
+          "text": "Good morning everyone. let's begin the meeting with the quarterly results.",
+          "errors": 0
+        },
+        "1000": {
+          "text": "Good morning everyone. let's begin the meeting with the quarterly results.",
+          "errors": 0
+        }
+      }
+    },
+    {
+      "id": "s00_first_word_alone",
+      "variant": "first_word_alone",
+      "truth": "Good morning everyone, let's begin the meeting with the quarterly results.",
+      "one_shot": "Good  morning  everyone,  let's  begin  the  meeting  with  the  quarterly  results.",
+      "streaming": {
+        "500": {
+          "text": "Good morning everyone. Let's begin the meeting with the quarterly results.",
+          "errors": 0
+        },
+        "800": {
+          "text": "Good morning everyone. Let's begin the meeting with the quarterly results.",
+          "errors": 0
+        },
+        "1000": {
+          "text": "Good morning everyone. Let's begin the meeting with the quarterly results.",
+          "errors": 0
+        }
+      }
+    },
+    {
+      "id": "s00_mid_pauses_800",
+      "variant": "mid_pauses_800",
+      "truth": "Good morning everyone, let's begin the meeting with the quarterly results.",
+      "one_shot": "Good  morning.  Everyone,  let's.  Begin  the  meeting  with  the  quarterly  results.",
+      "streaming": {
+        "500": {
+          "text": "Good morning. Everyone let's. Begin the meeting with the quarterly results.",
+          "errors": 0
+        },
+        "800": {
+          "text": "Good morning. everyone. let's begin the meeting with the quarterly results.",
+          "errors": 0
+        },
+        "1000": {
+          "text": "Good morning. everyone. let's begin the meeting with the quarterly results.",
+          "errors": 0
+        }
+      }
+    },
+    {
+      "id": "s00_word_by_word_500",
+      "variant": "word_by_word_500",
+      "truth": "Good morning everyone, let's begin the meeting with the quarterly results.",
+      "one_shot": "Good  morning,  everyone.  Let's  begin  the  meeting  with  the  quarterly  results.",
+      "streaming": {
+        "500": {
+          "text": "Good morning. everyone. Let's begin the meeting with the quarterly results.",
+          "errors": 0
+        },
+        "800": {
+          "text": "Good morning. everyone. Let's begin the meeting with the quarterly results.",
+          "errors": 0
+        },
+        "1000": {
+          "text": "Good morning. everyone. Let's begin the meeting with the quarterly results.",
+          "errors": 0
+        }
+      }
+    },
+    {
+      "id": "s00_last_word_alone_1200",
+      "variant": "last_word_alone_1200",
+      "truth": "Good morning everyone, let's begin the meeting with the quarterly results.",
+      "one_shot": "Good  morning  everyone,  let's  begin  the  meeting  with  the  quarterly.  Results.",
+      "streaming": {
+        "500": {
+          "text": "Good morning everyone. let's begin the meeting with the quarterly. Results",
+          "errors": 0
+        },
+        "800": {
+          "text": "Good morning everyone. let's begin the meeting with the quarterly. Results",
+          "errors": 0
+        },
+        "1000": {
+          "text": "Good morning everyone. let's begin the meeting with the quarterly. results.",
+          "errors": 0
+        }
+      }
+    },
+    {
+      "id": "s01_continuous",
+      "variant": "continuous",
+      "truth": "We will release the new version next Tuesday after the final review.",
+      "one_shot": "We  will  release  the  new  version  next  Tuesday  after  the  final  review.",
+      "streaming": {
+        "500": {
+          "text": "We will release the new version next Tuesday after the final review.",
+          "errors": 0
+        },
+        "800": {
+          "text": "We will release the new version next Tuesday after the final review.",
+          "errors": 0
+        },
+        "1000": {
+          "text": "We will release the new version next Tuesday after the final review.",
+          "errors": 0
+        }
+      }
+    },
+    {
+      "id": "s01_first_word_alone",
+      "variant": "first_word_alone",
+      "truth": "We will release the new version next Tuesday after the final review.",
+      "one_shot": "We,  will  release  the  new  version  next  Tuesday  after  the  final  review.",
+      "streaming": {
+        "500": {
+          "text": "We will release the new version next Tuesday after the final review.",
+          "errors": 0
+        },
+        "800": {
+          "text": "We will release the new version next Tuesday after the final review.",
+          "errors": 0
+        },
+        "1000": {
+          "text": "We will release the new version next Tuesday after the final review.",
+          "errors": 0
+        }
+      }
+    },
+    {
+      "id": "s01_mid_pauses_800",
+      "variant": "mid_pauses_800",
+      "truth": "We will release the new version next Tuesday after the final review.",
+      "one_shot": "We  will  release  the  new  version  next  Tuesday  after  the  final  review.",
+      "streaming": {
+        "500": {
+          "text": "We will. Release the New version next Tuesday after the final review.",
+          "errors": 0
+        },
+        "800": {
+          "text": "We will. Release the new version next Tuesday after the final review.",
+          "errors": 0
+        },
+        "1000": {
+          "text": "We will. Release the new version next Tuesday after the final review.",
+          "errors": 0
+        }
+      }
+    },
+    {
+      "id": "s01_word_by_word_500",
+      "variant": "word_by_word_500",
+      "truth": "We will release the new version next Tuesday after the final review.",
+      "one_shot": "We,  will,  release,  the  new  version  next  Tuesday  after  the  final  review.",
+      "streaming": {
+        "500": {
+          "text": "We Will. Release. the new version next Tuesday after the final review.",
+          "errors": 0
+        },
+        "800": {
+          "text": "We Will. Release. the new version next Tuesday after the final review.",
+          "errors": 0
+        },
+        "1000": {
+          "text": "We Will. Release. the new version next Tuesday after the final review.",
+          "errors": 0
+        }
+      }
+    },
+    {
+      "id": "s01_last_word_alone_1200",
+      "variant": "last_word_alone_1200",
+      "truth": "We will release the new version next Tuesday after the final review.",
+      "one_shot": "We  will  release  the  new  version  next  Tuesday  after  the  final  review.",
+      "streaming": {
+        "500": {
+          "text": "We will release the new version next Tuesday after the final.",
+          "errors": 1
+        },
+        "800": {
+          "text": "We will release the new version next Tuesday after the final. Review",
+          "errors": 0
+        },
+        "1000": {
+          "text": "We will release the new version next Tuesday after the final. review.",
+          "errors": 0
+        }
+      }
+    },
+    {
+      "id": "s02_continuous",
+      "variant": "continuous",
+      "truth": "Please send me the report before the end of the day.",
+      "one_shot": "Please  send  me  the  report  before  the  end  of  the  day.",
+      "streaming": {
+        "500": {
+          "text": "Please send me the report before the end of the day.",
+          "errors": 0
+        },
+        "800": {
+          "text": "Please send me the report before the end of the day.",
+          "errors": 0
+        },
+        "1000": {
+          "text": "Please send me the report before the end of the day.",
+          "errors": 0
+        }
+      }
+    },
+    {
+      "id": "s02_first_word_alone",
+      "variant": "first_word_alone",
+      "truth": "Please send me the report before the end of the day.",
+      "one_shot": "Please,  send  me  the  report  before  the  end  of  the  day.",
+      "streaming": {
+        "500": {
+          "text": "Please. send me the report before the end of the day.",
+          "errors": 0
+        },
+        "800": {
+          "text": "Please. send me the report before the end of the day.",
+          "errors": 0
+        },
+        "1000": {
+          "text": "Please. send me the report before the end of the day.",
+          "errors": 0
+        }
+      }
+    },
+    {
+      "id": "s02_mid_pauses_800",
+      "variant": "mid_pauses_800",
+      "truth": "Please send me the report before the end of the day.",
+      "one_shot": "Please  send.  Me  the  U.  Report  before  the  end  of  the  day.",
+      "streaming": {
+        "500": {
+          "text": "Please send. Me too. Report before the end of the day.",
+          "errors": 1
+        },
+        "800": {
+          "text": "Please send. Me the. Report before the end of the day.",
+          "errors": 0
+        },
+        "1000": {
+          "text": "Please send. Me the. Report before the end of the day.",
+          "errors": 0
+        }
+      }
+    },
+    {
+      "id": "s02_word_by_word_500",
+      "variant": "word_by_word_500",
+      "truth": "Please send me the report before the end of the day.",
+      "one_shot": "Please,  send,  me,  the  report  before  the  end  of  the  day.",
+      "streaming": {
+        "500": {
+          "text": "Please, send, me. the report before the end of the day.",
+          "errors": 0
+        },
+        "800": {
+          "text": "Please, send, me. the report before the end of the day.",
+          "errors": 0
+        },
+        "1000": {
+          "text": "Please, send, me. the report before the end of the day.",
+          "errors": 0
+        }
+      }
+    },
+    {
+      "id": "s02_last_word_alone_1200",
+      "variant": "last_word_alone_1200",
+      "truth": "Please send me the report before the end of the day.",
+      "one_shot": "Please  send  me  the  report  before  the  end  of  the  day.",
+      "streaming": {
+        "500": {
+          "text": "Please send me the report before the end of the ______. day.",
+          "errors": 1
+        },
+        "800": {
+          "text": "Please send me the report before the end of the day.",
+          "errors": 0
+        },
+        "1000": {
+          "text": "Please send me the report before the end of the day.",
+          "errors": 0
+        }
+      }
+    },
+    {
+      "id": "s03_continuous",
+      "variant": "continuous",
+      "truth": "The budget for this project has increased by ten percent.",
+      "one_shot": "The  budget  for  this  project  has  increased  by  10%.",
+      "streaming": {
+        "500": {
+          "text": "The budget for this project has increased by 10%.",
+          "errors": 2
+        },
+        "800": {
+          "text": "The budget for this project has increased by 10%.",
+          "errors": 2
+        },
+        "1000": {
+          "text": "The budget for this project has increased by 10%.",
+          "errors": 2
+        }
+      }
+    },
+    {
+      "id": "s03_first_word_alone",
+      "variant": "first_word_alone",
+      "truth": "The budget for this project has increased by ten percent.",
+      "one_shot": "The,  budget  for  this  project  has  increased  by  10%.",
+      "streaming": {
+        "500": {
+          "text": "The budget for this project has increased by 10%.",
+          "errors": 2
+        },
+        "800": {
+          "text": "The budget for this project has increased by 10%.",
+          "errors": 2
+        },
+        "1000": {
+          "text": "The budget for this project has increased by 10%.",
+          "errors": 2
+        }
+      }
+    },
+    {
+      "id": "s03_mid_pauses_800",
+      "variant": "mid_pauses_800",
+      "truth": "The budget for this project has increased by ten percent.",
+      "one_shot": "The  budget  for  this  project  has  increased  by  10%.",
+      "streaming": {
+        "500": {
+          "text": "The budget. for this. Project has increased by 10 percent",
+          "errors": 1
+        },
+        "800": {
+          "text": "The Budget for this. Project has increased by 10%.",
+          "errors": 2
+        },
+        "1000": {
+          "text": "The Budget for this. project has increased by 10",
+          "errors": 2
+        }
+      }
+    },
+    {
+      "id": "s03_word_by_word_500",
+      "variant": "word_by_word_500",
+      "truth": "The budget for this project has increased by ten percent.",
+      "one_shot": "The,  budget,  for,  this  project  has  increased  by  10%.",
+      "streaming": {
+        "500": {
+          "text": "The Budget For more information on the project, please visit the link in the description.",
+          "errors": 11
+        },
+        "800": {
+          "text": "The Budget for this project has increased by 10%.",
+          "errors": 2
+        },
+        "1000": {
+          "text": "The Budget for this project has increased by 10%.",
+          "errors": 2
+        }
+      }
+    },
+    {
+      "id": "s03_last_word_alone_1200",
+      "variant": "last_word_alone_1200",
+      "truth": "The budget for this project has increased by ten percent.",
+      "one_shot": "The  budget  for  this  project  has  increased  by  10 %",
+      "streaming": {
+        "500": {
+          "text": "The budget for this project has increased by 10. percent.",
+          "errors": 1
+        },
+        "800": {
+          "text": "The budget for this project has increased by 10. percent.",
+          "errors": 1
+        },
+        "1000": {
+          "text": "The budget for this project has increased by 10.",
+          "errors": 2
+        }
+      }
+    },
+    {
+      "id": "s04_continuous",
+      "variant": "continuous",
+      "truth": "Can you hear me clearly or should I move closer to the microphone?",
+      "one_shot": "Can  you  hear  me  clearly  or  should  I  move  closer  to  the  microphone?",
+      "streaming": {
+        "500": {
+          "text": "Can you hear me clearly or should I move closer to the microphone?",
+          "errors": 0
+        },
+        "800": {
+          "text": "Can you hear me clearly or should I move closer to the microphone?",
+          "errors": 0
+        },
+        "1000": {
+          "text": "Can you hear me clearly or should I move closer to the microphone?",
+          "errors": 0
+        }
+      }
+    },
+    {
+      "id": "s04_first_word_alone",
+      "variant": "first_word_alone",
+      "truth": "Can you hear me clearly or should I move closer to the microphone?",
+      "one_shot": "Kin,  you  hear  me  clearly  or  should  I  move  closer  to  the  microphone?",
+      "streaming": {
+        "500": {
+          "text": "Ken, you hear me clearly or should I move closer to the microphone?",
+          "errors": 1
+        },
+        "800": {
+          "text": "Ken, you hear me clearly or should I move closer to the microphone?",
+          "errors": 1
+        },
+        "1000": {
+          "text": "Ken, you hear me clearly or should I move closer to the microphone?",
+          "errors": 1
+        }
+      }
+    },
+    {
+      "id": "s04_mid_pauses_800",
+      "variant": "mid_pauses_800",
+      "truth": "Can you hear me clearly or should I move closer to the microphone?",
+      "one_shot": "Can  you  hear  me  clearly  or  should  I  move  closer  to  the  microphone?",
+      "streaming": {
+        "500": {
+          "text": "Can you? Hear me. Clearly or should I move closer to the microphone?",
+          "errors": 0
+        },
+        "800": {
+          "text": "Can you? hear me? clearly or should I move closer to the microphone?",
+          "errors": 0
+        },
+        "1000": {
+          "text": "Can you? hear me? clearly or should I move closer to the microphone?",
+          "errors": 0
+        }
+      }
+    },
+    {
+      "id": "s04_word_by_word_500",
+      "variant": "word_by_word_500",
+      "truth": "Can you hear me clearly or should I move closer to the microphone?",
+      "one_shot": "Can  you  hear  me  clearly  or  should  I  move  closer  to  the  microphone?",
+      "streaming": {
+        "500": {
+          "text": "Can you? Hear. Me clearly or should I move closer to the microphone?",
+          "errors": 0
+        },
+        "800": {
+          "text": "Can you? Hear. Me clearly or should I move closer to the microphone?",
+          "errors": 0
+        },
+        "1000": {
+          "text": "Can you? Hear. Me clearly or should I move closer to the microphone?",
+          "errors": 0
+        }
+      }
+    },
+    {
+      "id": "s04_last_word_alone_1200",
+      "variant": "last_word_alone_1200",
+      "truth": "Can you hear me clearly or should I move closer to the microphone?",
+      "one_shot": "Can  you  hear  me  clearly  or  should  I  move  closer  to  the  microphone?",
+      "streaming": {
+        "500": {
+          "text": "Can you hear me clearly or should I move closer to the... Microphone",
+          "errors": 0
+        },
+        "800": {
+          "text": "Can you hear me clearly or should I move closer to the... Microphone",
+          "errors": 0
+        },
+        "1000": {
+          "text": "Can you hear me clearly or should I move closer to the... microphone",
+          "errors": 0
+        }
+      }
+    },
+    {
+      "id": "s05_continuous",
+      "variant": "continuous",
+      "truth": "Our customers in Egypt and Saudi Arabia asked for this feature.",
+      "one_shot": "Our  customers  in  Egypt  and  Saudi  Arabia  asked  for  this  feature.",
+      "streaming": {
+        "500": {
+          "text": "Our customers in Egypt and Saudi Arabia asked for this feature.",
+          "errors": 0
+        },
+        "800": {
+          "text": "Our customers in Egypt and Saudi Arabia asked for this feature.",
+          "errors": 0
+        },
+        "1000": {
+          "text": "Our customers in Egypt and Saudi Arabia asked for this feature.",
+          "errors": 0
+        }
+      }
+    },
+    {
+      "id": "s05_first_word_alone",
+      "variant": "first_word_alone",
+      "truth": "Our customers in Egypt and Saudi Arabia asked for this feature.",
+      "one_shot": "R,  customers  in  Egypt  and  Saudi  Arabia  asked  for  this  feature.",
+      "streaming": {
+        "500": {
+          "text": "are Customers in Egypt and Saudi Arabia asked for this feature.",
+          "errors": 1
+        },
+        "800": {
+          "text": "are customers in Egypt and Saudi Arabia asked for this feature.",
+          "errors": 1
+        },
+        "1000": {
+          "text": "are customers in Egypt and Saudi Arabia asked for this feature.",
+          "errors": 1
+        }
+      }
+    },
+    {
+      "id": "s05_mid_pauses_800",
+      "variant": "mid_pauses_800",
+      "truth": "Our customers in Egypt and Saudi Arabia asked for this feature.",
+      "one_shot": "Our  customers  in  Egypt  and  Saudi  Arabia  asked  for  this  feature.",
+      "streaming": {
+        "500": {
+          "text": "our customers in Egypt. and Saudi Arabia asked for this feature.",
+          "errors": 0
+        },
+        "800": {
+          "text": "Our customers in Egypt and Saudi Arabia. asked for this feature.",
+          "errors": 0
+        },
+        "1000": {
+          "text": "Our customers in Egypt and Saudi Arabia. asked for this feature.",
+          "errors": 0
+        }
+      }
+    },
+    {
+      "id": "s05_word_by_word_500",
+      "variant": "word_by_word_500",
+      "truth": "Our customers in Egypt and Saudi Arabia asked for this feature.",
+      "one_shot": "R,  customers,  in,  Egypt  and  Saudi  Arabia  asked  for  this  feature.",
+      "streaming": {
+        "500": {
+          "text": "are customers, in, Egypt and Saudi Arabia asked for this feature.",
+          "errors": 1
+        },
+        "800": {
+          "text": "are customers in Egypt and Saudi Arabia. asked for this feature.",
+          "errors": 1
+        },
+        "1000": {
+          "text": "are customers in Egypt and Saudi Arabia. asked for this feature.",
+          "errors": 1
+        }
+      }
+    },
+    {
+      "id": "s05_last_word_alone_1200",
+      "variant": "last_word_alone_1200",
+      "truth": "Our customers in Egypt and Saudi Arabia asked for this feature.",
+      "one_shot": "Our  customers  in  Egypt  and  Saudi  Arabia  asked  for  this  feature.",
+      "streaming": {
+        "500": {
+          "text": "Our customers in Egypt and Saudi Arabia asked for this. feature.",
+          "errors": 0
+        },
+        "800": {
+          "text": "Our customers in Egypt and Saudi Arabia asked for this. feature.",
+          "errors": 0
+        },
+        "1000": {
+          "text": "Our customers in Egypt and Saudi Arabia asked for this.",
+          "errors": 1
+        }
+      }
+    },
+    {
+      "id": "s06_continuous",
+      "variant": "continuous",
+      "truth": "I think we should postpone the launch until the testing is complete.",
+      "one_shot": "I  think  we  should  postpone  the  launch  until  the  testing  is  complete.",
+      "streaming": {
+        "500": {
+          "text": "I think we should postpone the launch until the testing is complete.",
+          "errors": 0
+        },
+        "800": {
+          "text": "I think we should postpone the launch until the testing is complete.",
+          "errors": 0
+        },
+        "1000": {
+          "text": "I think we should postpone the launch until the testing is complete.",
+          "errors": 0
+        }
+      }
+    },
+    {
+      "id": "s06_first_word_alone",
+      "variant": "first_word_alone",
+      "truth": "I think we should postpone the launch until the testing is complete.",
+      "one_shot": "I  think  we  should  postpone  the  launch  until  the  testing  is  complete.",
+      "streaming": {
+        "500": {
+          "text": "I think we should postpone the launch until the testing is complete.",
+          "errors": 0
+        },
+        "800": {
+          "text": "I think we should postpone the launch until the testing is complete.",
+          "errors": 0
+        },
+        "1000": {
+          "text": "I think we should postpone the launch until the testing is complete.",
+          "errors": 0
+        }
+      }
+    },
+    {
+      "id": "s06_mid_pauses_800",
+      "variant": "mid_pauses_800",
+      "truth": "I think we should postpone the launch until the testing is complete.",
+      "one_shot": "I  think.  We  should.  Postpone  the  launch  until  the  testing  is  complete.",
+      "streaming": {
+        "500": {
+          "text": "I think. We should. Postpone the launch until the testing is complete.",
+          "errors": 0
+        },
+        "800": {
+          "text": "I think. we should. Postpone the launch until the testing is complete.",
+          "errors": 0
+        },
+        "1000": {
+          "text": "I think. we should. postpone the launch until the testing is complete.",
+          "errors": 0
+        }
+      }
+    },
+    {
+      "id": "s06_word_by_word_500",
+      "variant": "word_by_word_500",
+      "truth": "I think we should postpone the launch until the testing is complete.",
+      "one_shot": "I  think,  we,  should  postpone  the  launch  until  the  testing  is  complete.",
+      "streaming": {
+        "500": {
+          "text": "Bye. Think. We. should postpone the launch until the testing is complete.",
+          "errors": 1
+        },
+        "800": {
+          "text": "I think. we should postpone the launch until the testing is complete.",
+          "errors": 0
+        },
+        "1000": {
+          "text": "I think. we should postpone the launch until the testing is complete.",
+          "errors": 0
+        }
+      }
+    },
+    {
+      "id": "s06_last_word_alone_1200",
+      "variant": "last_word_alone_1200",
+      "truth": "I think we should postpone the launch until the testing is complete.",
+      "one_shot": "I  think  we  should  postpone  the  launch  until  the  testing  is  complete",
+      "streaming": {
+        "500": {
+          "text": "I think we should postpone the launch until the testing is Complete.",
+          "errors": 0
+        },
+        "800": {
+          "text": "I think we should postpone the launch until the testing is Complete.",
+          "errors": 0
+        },
+        "1000": {
+          "text": "I think we should postpone the launch until the testing is Complete.",
+          "errors": 0
+        }
+      }
+    },
+    {
+      "id": "s07_continuous",
+      "variant": "continuous",
+      "truth": "Thank you all for joining, and see you at the same time next week.",
+      "one_shot": "Thank  you  all  for  joining,  and  see  you  at  the  same  time  next  week.",
+      "streaming": {
+        "500": {
+          "text": "Thank you all for joining. and see you at the same time next week.",
+          "errors": 0
+        },
+        "800": {
+          "text": "Thank you all for joining. and see you at the same time next week.",
+          "errors": 0
+        },
+        "1000": {
+          "text": "Thank you all for joining. and see you at the same time next week.",
+          "errors": 0
+        }
+      }
+    },
+    {
+      "id": "s07_first_word_alone",
+      "variant": "first_word_alone",
+      "truth": "Thank you all for joining, and see you at the same time next week.",
+      "one_shot": "Thank,  you  all  for  joining,  and  see  you  at  the  same  time  next  week.",
+      "streaming": {
+        "500": {
+          "text": "Thank. you all for joining and see you at the same time next week.",
+          "errors": 0
+        },
+        "800": {
+          "text": "Thank you. all for joining, and see you at the same time next week.",
+          "errors": 0
+        },
+        "1000": {
+          "text": "Thank you. all for joining, and see you at the same time next week.",
+          "errors": 0
+        }
+      }
+    },
+    {
+      "id": "s07_mid_pauses_800",
+      "variant": "mid_pauses_800",
+      "truth": "Thank you all for joining, and see you at the same time next week.",
+      "one_shot": "Thank  you  all  for  joining,  and  see  you  at  the  same  time  next  week.",
+      "streaming": {
+        "500": {
+          "text": "Thank you. All four. joining and see you at the same time next week.",
+          "errors": 1
+        },
+        "800": {
+          "text": "Thank you. All four. joining. and see you at the same time next week.",
+          "errors": 1
+        },
+        "1000": {
+          "text": "Thank you. All four. joining. and see you at the same time next week.",
+          "errors": 1
+        }
+      }
+    },
+    {
+      "id": "s07_word_by_word_500",
+      "variant": "word_by_word_500",
+      "truth": "Thank you all for joining, and see you at the same time next week.",
+      "one_shot": "Thank,  you,  all,  for  joining,  and  see  you  at  the  same  time  next  week.",
+      "streaming": {
+        "500": {
+          "text": "Thank. You. All. for joining, and see you at the same time next week.",
+          "errors": 0
+        },
+        "800": {
+          "text": "Thank you. All. for joining, and see you at the same time next week.",
+          "errors": 0
+        },
+        "1000": {
+          "text": "Thank you. All. for joining, and see you at the same time next week.",
+          "errors": 0
+        }
+      }
+    },
+    {
+      "id": "s07_last_word_alone_1200",
+      "variant": "last_word_alone_1200",
+      "truth": "Thank you all for joining, and see you at the same time next week.",
+      "one_shot": "Thank  you  all  for  joining,  and  see  you  at  the  same  time  next...  ...week.",
+      "streaming": {
+        "500": {
+          "text": "Thank you all for joining. and see you at the same time next. week.",
+          "errors": 0
+        },
+        "800": {
+          "text": "Thank you all for joining. and see you at the same time next. week.",
+          "errors": 0
+        },
+        "1000": {
+          "text": "Thank you all for joining. and see you at the same time next. week.",
+          "errors": 0
+        }
+      }
+    }
+  ],
+  "summary_wer_percent": {
+    "one-shot": 2.98,
+    "stream min_silence=500": 5.32,
+    "stream min_silence=800": 2.77,
+    "stream min_silence=1000": 3.19
+  },
+  "words_per_variant": {
+    "continuous": 94,
+    "first_word_alone": 94,
+    "mid_pauses_800": 94,
+    "word_by_word_500": 94,
+    "last_word_alone_1200": 94
+  }
+}

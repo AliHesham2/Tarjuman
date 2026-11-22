@@ -16,7 +16,7 @@ Honest status of what exists and what is still missing on the way to fast, relia
 
 ### 0. Problems found by the first real measurement ([details](docs/PERFORMANCE.md))
 - [x] Streaming mode dropped words when the VAD reported an utterance end and the next start in one chunk (36% → 4.5% of words differ from a one-shot transcription on the test clip; regression test added)
-- [ ] Short isolated words after a pause are misheard ("ask" → "ASS"). Evaluate on more audio: overlap with the previous utterance's audio, a longer `vad.min_silence_ms`, or merging short utterances. A context prompt was tried and did not help
+- [ ] Pauses of 500 ms or more split speech into fragments that Whisper mishears (13.8% word errors in a synthetic test, 2.8% with `vad.min_silence_ms: 800`). Decide whether to change the default, then confirm on real recordings (see `docs/PERFORMANCE.md`)
 - [ ] Translation providers: Groq accounts were restricted during the test; confirm Groq's terms, add more providers, and make failed providers cost no time on the first sentences
 
 ### 1. Prove the speed (the core promise)
