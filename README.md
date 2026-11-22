@@ -15,6 +15,14 @@ Tarjuman (ترجمان, "interpreter") listens to the audio your computer is pla
 
 > **Status: early but working (v0.1).** Today Tarjuman translates **English → Arabic** on **Windows**. The goal is any language to any language, for everyone. See the [Roadmap](ROADMAP.md) for what is done and what is missing.
 
+## Language plan
+
+1. **Now:** English → Arabic (implemented).
+2. **Next:** Arabic → English, so conversations work in both directions (planned, not implemented yet).
+3. **Then:** more languages, one at a time, using the same pipeline (planned).
+
+Right now the focus is **speed and quality** of the translation, not the number of languages. New languages come after the core is fast and accurate.
+
 ## Why Tarjuman
 
 Most live-translation features are built into one product (Zoom, Google Meet, Teams) and work only inside it. Tarjuman sits outside the meeting app, so it works with **any** source: a conference platform, a webinar, a YouTube lecture, a livestream, a recorded call.

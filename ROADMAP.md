@@ -22,6 +22,8 @@ Honest status of what exists and what is still missing on the way to fast, relia
 - [ ] Benchmark against whisper_streaming, WhisperLiveKit and others on the same audio
 
 ### 2. Languages (the mission)
+Order: English → Arabic (done), then Arabic → English, then more languages. Current priority is speed and quality of the core, so languages come after item 1.
+- [ ] Arabic → English (second direction, enables two-way conversations)
 - [ ] Choose any source and target language in Settings (today: English → Arabic only)
 - [ ] Automatic source-language detection
 - [ ] Add right-to-left and non-Latin font handling beyond Arabic
